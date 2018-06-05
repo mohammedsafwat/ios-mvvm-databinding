@@ -17,7 +17,6 @@ class MockCoreDataManager: CoreDataManager {
         managedObjectContext.persistentStoreCoordinator = self.inMemoryPersistentStoreCoordinator
 
         return managedObjectContext
-
     }
     
     private lazy var inMemoryManagedObjectModel: NSManagedObjectModel = {
