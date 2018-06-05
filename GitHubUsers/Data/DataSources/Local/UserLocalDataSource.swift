@@ -19,7 +19,7 @@ class UserLocalDataSource: UserDataSource {
         self.coreDataManager = coreDataManager
     }
     
-    func fetchUserData(username: String, onSuccess: SuccessCallBack?, onError: ErrorCallBack?) {
+    func fetchUserData(username: String, onSuccess: SuccessCallBack? = nil, onError: ErrorCallBack? = nil) {
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "login = %@", username)
         
@@ -41,7 +41,7 @@ class UserLocalDataSource: UserDataSource {
         }
     }
     
-    func saveUserData(userData: UserData, onError: ErrorCallBack?) {
+    func saveUserData(userData: UserData, onError: ErrorCallBack? = nil) {
         let managedObjectContext = coreDataManager.managedObjectContext()
         // Create User Record
         let user = User(context: managedObjectContext)
@@ -71,15 +71,42 @@ class UserLocalDataSource: UserDataSource {
     }
     
     
-    func deleteUserData(userId: Int, onError: ErrorCallBack?) {
+    func deleteUserData(userId: Int, onError: ErrorCallBack? = nil) {
         let managedObjectContext = coreDataManager.managedObjectContext()
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %d", userId)
         
         managedObjectContext.performAndWait {
             do {
-                guard let user = try fetchRequest.execute().first else { return }
+                guard let user = try fetchRequest.execute().first else {
+                    let error = NSError(domain: "com.safwat.githubusers", code: 401, userInfo: ["Error":"An error happend while fetching user record with id: \(userId)"])
+                    onError?(error)
+                    return
+                }
                 managedObjectContext.delete(user)
+                try managedObjectContext.save()
+            } catch {
+                let deleteError = error as NSError
+                onError?(deleteError)
+            }
+        }
+    }
+    
+    func deleteAllUsers(onError: ErrorCallBack? = nil) {
+        let managedObjectContext = coreDataManager.managedObjectContext()
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = User.fetchRequest()
+        
+        managedObjectContext.performAndWait {
+            do {
+                guard let users = try fetchRequest.execute() as? [User] else {
+                    let error = NSError(domain: "com.safwat.githubusers", code: 401, userInfo: ["Error":"An error happend while fetching user records."])
+                    onError?(error)
+                    return
+                }
+                for user in users {
+                    managedObjectContext.delete(user)
+                }
+                try managedObjectContext.save()
             } catch {
                 let deleteError = error as NSError
                 onError?(deleteError)
