@@ -18,6 +18,8 @@ class UserLocalDataSourceSpec: QuickSpec {
         var returnedUserData: UserData?
         var returnedError: Error?
         var userLocalDataSource: UserLocalDataSource?
+        
+        let mockCoreDataManager = MockCoreDataManager(modelName: "GitHubUsers")
         let mockUserData = UserData(login: "seconduser", id: 2, name: "Second User", bio: "Second User Bio", email: "second@gmail.com", avatarUrl: "https://resourceurl/resource.jpg", followers: 5, following: 10)
         
         describe("user local data source") {
@@ -25,14 +27,13 @@ class UserLocalDataSourceSpec: QuickSpec {
                 returnedUserData = nil
                 returnedError = nil
                 
-                userLocalDataSource = UserLocalDataSource(coreDataManager: MockCoreDataManager(modelName: "GitHubUsers"))
+                userLocalDataSource = UserLocalDataSource(coreDataManager: mockCoreDataManager)
+                userLocalDataSource?.deleteAllUsers()
             }
             
             context("fetch a user record that does not exist") {
                 beforeEach {
-                    userLocalDataSource?.fetchUserData(username: "nonexistentusername", onSuccess: { (userData) in
-                        returnedUserData = userData
-                    }, onError: { (error) in
+                    userLocalDataSource?.fetchUserData(username: "nonexistentusername", onError: { (error) in
                         returnedError = error
                     })
                 }
@@ -48,29 +49,45 @@ class UserLocalDataSourceSpec: QuickSpec {
                     userLocalDataSource?.saveUserData(userData: mockUserData, onError: { (error) in
                         returnedError = error
                     })
+                    userLocalDataSource?.fetchUserData(username: mockUserData.login!, onSuccess: { (userData) in
+                        returnedUserData = userData
+                    })
                 }
                 
                 it("should not return an error if the managedObjectContext successfully adds the record to core data") {
                     expect(returnedError).to(beNil())
                 }
-            })
-            
-            context("fetch a user record after saving it", closure: {
-                beforeEach {
-                    userLocalDataSource?.saveUserData(userData: mockUserData, onError: { (error) in
-                        returnedError = error
-                    })
-                    userLocalDataSource?.fetchUserData(username: mockUserData.login!, onSuccess: { (userData) in
-                        returnedUserData = userData
-                    }, onError: { (error) in
-                        returnedError = error
-                    })
-                }
                 
                 it("should return the same record that was saved into core data") {
-                    expect(returnedUserData).toEventuallyNot(beNil(), timeout: 10)
-                    expect(returnedUserData?.email).toEventually(equal(mockUserData.email), timeout: 10)
+                    expect(returnedUserData).toEventuallyNot(beNil(), timeout: 2)
+                    expect(returnedUserData?.email).toEventually(equal(mockUserData.email), timeout: 2)
                 }
+            })
+            
+            context("delete user record that exists", closure: {
+                beforeEach {
+                    userLocalDataSource?.saveUserData(userData: mockUserData)
+                    userLocalDataSource?.deleteUserData(userId: mockUserData.id!)
+                    userLocalDataSource?.fetchUserData(username: mockUserData.login!, onSuccess: { (userData) in
+                        returnedUserData = userData
+                    })
+                }
+
+                it("should not return any user record", closure: {
+                    expect(returnedUserData).toEventually(beNil(), timeout: 2)
+                })
+            })
+
+            context("delete a user record that does not exist", closure: {
+                beforeEach {
+                    userLocalDataSource?.deleteUserData(userId: 1001, onError: { (error) in
+                        returnedError = error
+                    })
+                }
+
+                it("should return an error", closure: {
+                    expect(returnedError).toNot(beNil())
+                })
             })
         }
     }
