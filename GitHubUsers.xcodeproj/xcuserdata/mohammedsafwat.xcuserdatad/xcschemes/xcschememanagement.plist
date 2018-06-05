@@ -7,7 +7,25 @@
 		<key>GitHubUsers.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>9</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>3B01602820A1952B00B87CB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3B01603C20A1953100B87CB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3B01604720A1953100B87CB2</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
