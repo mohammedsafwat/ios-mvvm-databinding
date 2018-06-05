@@ -1,4 +1,4 @@
-# todo-mvvm-databinding
+# ios-mvvm-databinding
 
 This app is a small demonstration for the MVVM design pattern, and is based on the [todo-mvvm-databinding](https://github.com/googlesamples/android-architecture/tree/todo-mvvm-databinding) sample from Google.
 
