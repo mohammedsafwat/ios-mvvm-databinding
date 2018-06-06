@@ -28,6 +28,9 @@ class UserLocalDataSourceSpec: QuickSpec {
                 returnedError = nil
                 
                 userLocalDataSource = UserLocalDataSource(coreDataManager: mockCoreDataManager)
+                
+                // Make sure to clean all saved data before each test runs
+                userLocalDataSource?.deleteAllUsers()
             }
             
             context("fetch a user record that does not exist") {
@@ -43,9 +46,8 @@ class UserLocalDataSourceSpec: QuickSpec {
                 })
             }
             
-            context("save a user record and then fetch it", closure: {
+            context("fetch a user record after saving it", closure: {
                 beforeEach {
-                    userLocalDataSource?.deleteAllUsers()
                     userLocalDataSource?.saveUserData(userData: mockUserData)
                     userLocalDataSource?.fetchUserData(username: mockUserData.login!, onSuccess: { (userData) in
                         returnedUserData = userData
@@ -62,9 +64,8 @@ class UserLocalDataSourceSpec: QuickSpec {
                 }
             })
             
-            context("delete user record that exists", closure: {
+            context("fetch a user record after deleting it", closure: {
                 beforeEach {
-                    userLocalDataSource?.deleteAllUsers()
                     userLocalDataSource?.saveUserData(userData: mockUserData)
                     userLocalDataSource?.deleteUserData(userId: mockUserData.id!)
                     userLocalDataSource?.fetchUserData(username: mockUserData.login!, onSuccess: { (userData) in
@@ -74,18 +75,6 @@ class UserLocalDataSourceSpec: QuickSpec {
 
                 it("should not return any user record", closure: {
                     expect(returnedUserData).toEventually(beNil(), timeout: 2)
-                })
-            })
-
-            context("delete a user record that does not exist", closure: {
-                beforeEach {
-                    userLocalDataSource?.deleteUserData(userId: 1001, onError: { (error) in
-                        returnedError = error
-                    })
-                }
-
-                it("should return an error", closure: {
-                    expect(returnedError).toNot(beNil())
                 })
             })
         }
