@@ -86,7 +86,7 @@ extension UserDataViewController {
     }
     
     private func fetchUserData(withUsername username: String) {
-        userDataViewModel.fetchUserData(withUsername: username, forceUpdate: false, showLoadingUI: true)
+        userDataViewModel.fetchUserData(withUsername: username, forceUpdate: true, showLoadingUI: true)
         searchInputTextField.resignFirstResponder()
     }
 }
