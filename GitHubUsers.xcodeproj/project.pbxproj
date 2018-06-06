@@ -36,9 +36,9 @@
 		3B82270320C6A1D50066EC0A /* MockUserRemoteDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82270020C6A1D50066EC0A /* MockUserRemoteDataSource.swift */; };
 		3B82270420C6A1D50066EC0A /* MockRESTApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B82270120C6A1D50066EC0A /* MockRESTApiClient.swift */; };
 		3B8F60B420C6B76200E2E4F7 /* UserLocalDataSourceSpec.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B8F60B320C6B76200E2E4F7 /* UserLocalDataSourceSpec.swift */; };
+		3B95479120C7DC3200FCFE7F /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B95479020C7DC3200FCFE7F /* CoreDataManager.swift */; };
+		3B95479520C7DC5000FCFE7F /* GitHubUsers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3B95479320C7DC5000FCFE7F /* GitHubUsers.xcdatamodeld */; };
 		3BD3553F20BC01E600E83D22 /* StubInvalidUserData.json in Resources */ = {isa = PBXBuildFile; fileRef = 3BD3553E20BC01E600E83D22 /* StubInvalidUserData.json */; };
-		3BF7551620C7DA6A00E3A567 /* GitHubUsers.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3BF7551220C7DA6A00E3A567 /* GitHubUsers.xcdatamodeld */; };
-		3BF7551720C7DA6A00E3A567 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BF7551520C7DA6A00E3A567 /* CoreDataManager.swift */; };
 		3BFE8EDB20C6C7C400F616DF /* MockCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BFE8EDA20C6C7C400F616DF /* MockCoreDataManager.swift */; };
 		4F69051D8830E2670D545B3D /* Pods_GitHubUsersTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E72A6E9D4DE8650A7470D4C /* Pods_GitHubUsersTests.framework */; };
 		7643743A05FDBCEB8E1A5C10 /* Pods_GitHubUsers.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649B9B77E53E618FE4F6B065 /* Pods_GitHubUsers.framework */; };
@@ -99,9 +99,9 @@
 		3B82270020C6A1D50066EC0A /* MockUserRemoteDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUserRemoteDataSource.swift; sourceTree = "<group>"; };
 		3B82270120C6A1D50066EC0A /* MockRESTApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockRESTApiClient.swift; sourceTree = "<group>"; };
 		3B8F60B320C6B76200E2E4F7 /* UserLocalDataSourceSpec.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLocalDataSourceSpec.swift; sourceTree = "<group>"; };
+		3B95479020C7DC3200FCFE7F /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		3B95479420C7DC5000FCFE7F /* GitHubUsers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GitHubUsers.xcdatamodel; sourceTree = "<group>"; };
 		3BD3553E20BC01E600E83D22 /* StubInvalidUserData.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = StubInvalidUserData.json; sourceTree = "<group>"; };
-		3BF7551320C7DA6A00E3A567 /* GitHubUsers.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GitHubUsers.xcdatamodel; sourceTree = "<group>"; };
-		3BF7551520C7DA6A00E3A567 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		3BFE8EDA20C6C7C400F616DF /* MockCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreDataManager.swift; sourceTree = "<group>"; };
 		3EA6FD076C8800771496C14D /* Pods_GitHubUsersUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GitHubUsersUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E72A6E9D4DE8650A7470D4C /* Pods_GitHubUsersTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GitHubUsersTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -179,7 +179,7 @@
 		3B01602B20A1952B00B87CB2 /* GitHubUsers */ = {
 			isa = PBXGroup;
 			children = (
-				3BF7550F20C7DA6A00E3A567 /* App */,
+				3B95478D20C7DC0C00FCFE7F /* App */,
 				3B01607D20A1F2CB00B87CB2 /* Presentation */,
 				3B68F5F920A315B100B9E33C /* Domain */,
 				3B01606920A1A4E400B87CB2 /* Data */,
@@ -456,38 +456,37 @@
 			path = MockClasses;
 			sourceTree = "<group>";
 		};
-		3BF7550F20C7DA6A00E3A567 /* App */ = {
+		3B95478D20C7DC0C00FCFE7F /* App */ = {
 			isa = PBXGroup;
 			children = (
-				3BF7551020C7DA6A00E3A567 /* CoreData */,
+				3B95478E20C7DC1300FCFE7F /* CoreData */,
 			);
-			name = App;
-			path = ../../../Desktop/App;
+			path = App;
 			sourceTree = "<group>";
 		};
-		3BF7551020C7DA6A00E3A567 /* CoreData */ = {
+		3B95478E20C7DC1300FCFE7F /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				3BF7551120C7DA6A00E3A567 /* DataModels */,
-				3BF7551420C7DA6A00E3A567 /* Manager */,
+				3B95479220C7DC3E00FCFE7F /* DataModels */,
+				3B95478F20C7DC1E00FCFE7F /* Manager */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
 		};
-		3BF7551120C7DA6A00E3A567 /* DataModels */ = {
+		3B95478F20C7DC1E00FCFE7F /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				3BF7551220C7DA6A00E3A567 /* GitHubUsers.xcdatamodeld */,
-			);
-			path = DataModels;
-			sourceTree = "<group>";
-		};
-		3BF7551420C7DA6A00E3A567 /* Manager */ = {
-			isa = PBXGroup;
-			children = (
-				3BF7551520C7DA6A00E3A567 /* CoreDataManager.swift */,
+				3B95479020C7DC3200FCFE7F /* CoreDataManager.swift */,
 			);
 			path = Manager;
+			sourceTree = "<group>";
+		};
+		3B95479220C7DC3E00FCFE7F /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				3B95479320C7DC5000FCFE7F /* GitHubUsers.xcdatamodeld */,
+			);
+			path = DataModels;
 			sourceTree = "<group>";
 		};
 		D2CC511FFD84D7DA86048F97 /* Frameworks */ = {
@@ -810,7 +809,9 @@
 				3B68F60020A31CC100B9E33C /* UIAlertUtils.swift in Sources */,
 				3B01606020A19F5100B87CB2 /* UserData.swift in Sources */,
 				3B4B09BB20A33D7D00EE39D8 /* ImageLoader.swift in Sources */,
+				3B95479120C7DC3200FCFE7F /* CoreDataManager.swift in Sources */,
 				3B68F60A20A3328900B9E33C /* Configuration.swift in Sources */,
+				3B95479520C7DC5000FCFE7F /* GitHubUsers.xcdatamodeld in Sources */,
 				3B01607C20A1EF6000B87CB2 /* UserLocalDataSource.swift in Sources */,
 				3B01602D20A1952B00B87CB2 /* AppDelegate.swift in Sources */,
 				3B01606320A1A09900B87CB2 /* UserRemoteDataSource.swift in Sources */,
@@ -821,8 +822,6 @@
 				3B01606F20A1A69300B87CB2 /* RESTApiClient.swift in Sources */,
 				3B68F5FD20A3175300B9E33C /* UserDataViewController.swift in Sources */,
 				3B01608120A1F37300B87CB2 /* UserDataViewModel.swift in Sources */,
-				3BF7551720C7DA6A00E3A567 /* CoreDataManager.swift in Sources */,
-				3BF7551620C7DA6A00E3A567 /* GitHubUsers.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1171,12 +1170,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		3BF7551220C7DA6A00E3A567 /* GitHubUsers.xcdatamodeld */ = {
+		3B95479320C7DC5000FCFE7F /* GitHubUsers.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				3BF7551320C7DA6A00E3A567 /* GitHubUsers.xcdatamodel */,
+				3B95479420C7DC5000FCFE7F /* GitHubUsers.xcdatamodel */,
 			);
-			currentVersion = 3BF7551320C7DA6A00E3A567 /* GitHubUsers.xcdatamodel */;
+			currentVersion = 3B95479420C7DC5000FCFE7F /* GitHubUsers.xcdatamodel */;
 			path = GitHubUsers.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
