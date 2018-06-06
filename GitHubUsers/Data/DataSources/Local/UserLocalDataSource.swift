@@ -78,13 +78,11 @@ class UserLocalDataSource: UserDataSource {
         
         managedObjectContext.performAndWait {
             do {
-                guard let user = try fetchRequest.execute().first else {
-                    let error = NSError(domain: "com.safwat.githubusers", code: 401, userInfo: ["Error":"An error happend while fetching user record with id: \(userId)"])
-                    onError?(error)
-                    return
+                let user = try fetchRequest.execute().first
+                if let user = user {
+                    managedObjectContext.delete(user)
+                    try managedObjectContext.save()
                 }
-                managedObjectContext.delete(user)
-                try managedObjectContext.save()
             } catch {
                 let deleteError = error as NSError
                 onError?(deleteError)
@@ -98,15 +96,13 @@ class UserLocalDataSource: UserDataSource {
         
         managedObjectContext.performAndWait {
             do {
-                guard let users = try fetchRequest.execute() as? [User] else {
-                    let error = NSError(domain: "com.safwat.githubusers", code: 401, userInfo: ["Error":"An error happend while fetching user records."])
-                    onError?(error)
-                    return
+                let users = try fetchRequest.execute() as? [User]
+                if let users = users {
+                    for user in users {
+                        managedObjectContext.delete(user)
+                    }
+                    try managedObjectContext.save()
                 }
-                for user in users {
-                    managedObjectContext.delete(user)
-                }
-                try managedObjectContext.save()
             } catch {
                 let deleteError = error as NSError
                 onError?(deleteError)
