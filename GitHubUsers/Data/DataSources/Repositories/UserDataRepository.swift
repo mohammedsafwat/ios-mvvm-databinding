@@ -34,9 +34,9 @@ class UserDataRepository: UserDataSource {
                 onError?(error)
             }
         } else {
-            userLocalDataSource?.fetchUserData(username: username, onSuccess: { (userData) in
-                self.refreshCache(username: username, userData: userData)
-                guard let cachedUserData = self.cachedUserData[username] else { return }
+            userLocalDataSource?.fetchUserData(username: username, onSuccess: { [weak self] (userData) in
+                self?.refreshCache(username: username, userData: userData)
+                guard let cachedUserData = self?.cachedUserData[username] else { return }
                 onSuccess?(cachedUserData)
             }, onError: { (error) in
                 self.getUserDataFromRemoteDataSource(username: username, onSuccess: { (userData) in
@@ -68,9 +68,9 @@ class UserDataRepository: UserDataSource {
 
 extension UserDataRepository {
     private func getUserDataFromRemoteDataSource(username: String, onSuccess: SuccessCallBack?, onError: ErrorCallBack?) {
-        userRemoteDataSource?.fetchUserData(username: username, onSuccess: { (userData) in
-            self.refreshCache(username: username, userData: userData)
-            self.refreshLocalDataSource(username: username, userData: userData, onError: onError)
+        userRemoteDataSource?.fetchUserData(username: username, onSuccess: { [weak self] (userData) in
+            self?.refreshCache(username: username, userData: userData)
+            self?.refreshLocalDataSource(username: username, userData: userData, onError: onError)
             onSuccess?(userData)
         }, onError: { (error) in
             onError?(error)
