@@ -181,14 +181,8 @@
 			children = (
 				3B95478D20C7DC0C00FCFE7F /* App */,
 				3B01607D20A1F2CB00B87CB2 /* Presentation */,
-				3B68F5F920A315B100B9E33C /* Domain */,
 				3B01606920A1A4E400B87CB2 /* Data */,
-				3B68F5FE20A31C7800B9E33C /* Utils */,
-				3B68F60820A3327000B9E33C /* Configuration */,
-				3B01602C20A1952B00B87CB2 /* AppDelegate.swift */,
-				3B01603020A1952B00B87CB2 /* Main.storyboard */,
 				3B01603320A1953100B87CB2 /* Assets.xcassets */,
-				3B01603520A1953100B87CB2 /* LaunchScreen.storyboard */,
 				3B01603820A1953100B87CB2 /* Info.plist */,
 			);
 			path = GitHubUsers;
@@ -227,14 +221,6 @@
 			path = DataSourcesTests;
 			sourceTree = "<group>";
 		};
-		3B01605E20A19F3C00B87CB2 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				3B01605F20A19F5100B87CB2 /* UserData.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		3B01606120A1A07E00B87CB2 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +235,7 @@
 		3B01606920A1A4E400B87CB2 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				3BABB8B020C9561200BCC3CC /* Models */,
 				3B01606120A1A07E00B87CB2 /* DataSources */,
 				3B01606A20A1A4FC00B87CB2 /* ApiClients */,
 			);
@@ -379,22 +366,6 @@
 			path = Repositories;
 			sourceTree = "<group>";
 		};
-		3B68F5F920A315B100B9E33C /* Domain */ = {
-			isa = PBXGroup;
-			children = (
-				3B68F5FA20A315B900B9E33C /* UserData */,
-			);
-			path = Domain;
-			sourceTree = "<group>";
-		};
-		3B68F5FA20A315B900B9E33C /* UserData */ = {
-			isa = PBXGroup;
-			children = (
-				3B01605E20A19F3C00B87CB2 /* Models */,
-			);
-			path = UserData;
-			sourceTree = "<group>";
-		};
 		3B68F5FB20A3172F00B9E33C /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -459,6 +430,10 @@
 		3B95478D20C7DC0C00FCFE7F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				3BABB8B120C9563300BCC3CC /* AppDelegate */,
+				3BABB8B220C9563A00BCC3CC /* Storyboards */,
+				3B68F60820A3327000B9E33C /* Configuration */,
+				3B68F5FE20A31C7800B9E33C /* Utils */,
 				3B95478E20C7DC1300FCFE7F /* CoreData */,
 			);
 			path = App;
@@ -487,6 +462,31 @@
 				3B95479320C7DC5000FCFE7F /* GitHubUsers.xcdatamodeld */,
 			);
 			path = DataModels;
+			sourceTree = "<group>";
+		};
+		3BABB8B020C9561200BCC3CC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3B01605F20A19F5100B87CB2 /* UserData.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		3BABB8B120C9563300BCC3CC /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				3B01602C20A1952B00B87CB2 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		3BABB8B220C9563A00BCC3CC /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				3B01603020A1952B00B87CB2 /* Main.storyboard */,
+				3B01603520A1953100B87CB2 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 		D2CC511FFD84D7DA86048F97 /* Frameworks */ = {
