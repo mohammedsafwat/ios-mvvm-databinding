@@ -6,7 +6,7 @@
 //  Copyright © 2018 Mohammed Safwat. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
 class UserDataViewModel {
     private var userDataRepository: UserDataRepository?
