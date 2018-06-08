@@ -38,8 +38,8 @@ class UserDataRepository: UserDataSource {
                 self?.refreshCache(username: username, userData: userData)
                 guard let cachedUserData = self?.cachedUserData[username] else { return }
                 onSuccess?(cachedUserData)
-            }, onError: { (error) in
-                self.getUserDataFromRemoteDataSource(username: username, onSuccess: { (userData) in
+            }, onError: { [weak self] (error) in
+                self?.getUserDataFromRemoteDataSource(username: username, onSuccess: { (userData) in
                     onSuccess?(userData)
                 }, onError: { (error) in
                     onError?(error)
