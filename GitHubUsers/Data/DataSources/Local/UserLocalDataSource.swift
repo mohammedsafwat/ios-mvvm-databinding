@@ -42,28 +42,29 @@ class UserLocalDataSource: UserDataSource {
     }
     
     func saveUserData(userData: UserData, onError: ErrorCallBack? = nil) {
-        let managedObjectContext = coreDataManager.managedObjectContext()
-        // Create User Record
-        let user = User(context: managedObjectContext)
-        
-        // Configure User
-        if let userId = userData.id {
-            user.id = Int64(userId)
+        coreDataManager.managedObjectContext().performAndWait {
+            // Create User Record
+            let user = User(context: coreDataManager.managedObjectContext())
+            
+            // Configure User
+            if let userId = userData.id {
+                user.id = Int32(userId)
+            }
+            if let followers = userData.followers {
+                user.followers = Int32(followers)
+            }
+            if let following = userData.following {
+                user.following = Int32(following)
+            }
+            user.login = userData.login
+            user.name = userData.name
+            user.email = userData.email
+            user.bio = userData.bio
+            user.avatarUrl = userData.avatarUrl
         }
-        if let followers = userData.followers {
-            user.followers = Int64(followers)
-        }
-        if let following = userData.following {
-            user.following = Int64(following)
-        }
-        user.login = userData.login
-        user.name = userData.name
-        user.email = userData.email
-        user.bio = userData.bio
-        user.avatarUrl = userData.avatarUrl
         
         do {
-            try managedObjectContext.save()
+            try coreDataManager.managedObjectContext().save()
         } catch {
             let saveError = error as NSError
             onError?(saveError)
@@ -72,16 +73,15 @@ class UserLocalDataSource: UserDataSource {
     
     
     func deleteUserData(userId: Int, onError: ErrorCallBack? = nil) {
-        let managedObjectContext = coreDataManager.managedObjectContext()
         let fetchRequest: NSFetchRequest<User> = User.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %d", userId)
         
-        managedObjectContext.performAndWait {
+        coreDataManager.managedObjectContext().performAndWait {
             do {
                 let user = try fetchRequest.execute().first
                 if let user = user {
-                    managedObjectContext.delete(user)
-                    try managedObjectContext.save()
+                    coreDataManager.managedObjectContext().delete(user)
+                    try coreDataManager.managedObjectContext().save()
                 }
             } catch {
                 let deleteError = error as NSError
@@ -91,17 +91,16 @@ class UserLocalDataSource: UserDataSource {
     }
     
     func deleteAllUsers(onError: ErrorCallBack? = nil) {
-        let managedObjectContext = coreDataManager.managedObjectContext()
         let fetchRequest: NSFetchRequest<NSFetchRequestResult> = User.fetchRequest()
         
-        managedObjectContext.performAndWait {
+        coreDataManager.managedObjectContext().performAndWait {
             do {
                 let users = try fetchRequest.execute() as? [User]
                 if let users = users {
                     for user in users {
-                        managedObjectContext.delete(user)
+                        coreDataManager.managedObjectContext().delete(user)
                     }
-                    try managedObjectContext.save()
+                    try coreDataManager.managedObjectContext().save()
                 }
             } catch {
                 let deleteError = error as NSError
