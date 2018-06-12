@@ -95,8 +95,7 @@ class UserLocalDataSource: UserDataSource {
         
         coreDataManager.managedObjectContext().performAndWait {
             do {
-                let users = try fetchRequest.execute() as? [User]
-                if let users = users {
+                if let users = try fetchRequest.execute() as? [User] {
                     for user in users {
                         coreDataManager.managedObjectContext().delete(user)
                     }
