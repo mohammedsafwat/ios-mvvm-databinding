@@ -52,7 +52,7 @@ class UserRemoteDataSourceSpec: QuickSpec {
             })
             
             context("when fetching user data is not successful", {
-                let error = NSError(domain: "error", code: 404, userInfo: nil)
+                let error = NSError(domain: "com.safwat.GitHubUsers", code: 404, userInfo: nil)
 
                 beforeEach {
                     self.stub(urlString: validUserRequestUrlString, error: error)

@@ -16,7 +16,7 @@ class UserDataRepositorySpec: QuickSpec {
         super.spec()
         
         var userDataRepository: UserDataRepository?
-        let userRemoteDataSource: MockUserRemoteDataSource = MockUserRemoteDataSource(apiClient: MockRESTApiClient(headers: [:]), baseUrl: "https://testresources/image.jpg")
+        let userRemoteDataSource: MockUserRemoteDataSource = MockUserRemoteDataSource(apiClient: MockRESTApiClient(headers: [:]), baseUrl: "https://api.github.com/users/")
         let userLocalDataSource: MockUserLocalDataSource = MockUserLocalDataSource(coreDataManager: MockCoreDataManager(modelName: "GitHubUsers"))
         
         // Mock User Data
@@ -79,7 +79,7 @@ class UserDataRepositorySpec: QuickSpec {
                 })
             })
             
-            context("when fetchUserData is called and data is not avalable from remote data source", closure: {
+            context("when fetchUserData is called and data is not available from remote data source", closure: {
                 var fetchedUserData: UserData?
                 var fetchError: Error?
                 

@@ -20,7 +20,7 @@ class UserLocalDataSourceSpec: QuickSpec {
         var userLocalDataSource: UserLocalDataSource?
         
         let mockCoreDataManager = MockCoreDataManager(modelName: "GitHubUsers")
-        let mockUserData = UserData(login: "seconduser", id: 2, name: "Second User", bio: "Second User Bio", email: "second@gmail.com", avatarUrl: "https://resourceurl/resource.jpg", followers: 5, following: 10)
+        let mockUserData = UserData(login: "seconduser", id: 2, name: "Second User", bio: "Second User Bio", email: "second@gmail.com", avatarUrl: "https://resourrceurl/resource.jpg", followers: 5, following: 10)
         
         describe("user local data source") {
             beforeEach {
@@ -54,7 +54,7 @@ class UserLocalDataSourceSpec: QuickSpec {
                     })
                 }
                 
-                it("should not return an error if the managedObjectContext successfully adds the record to core data") {
+                it("should not return an error if the managedObjectContext successfully saves the record to core data") {
                     expect(returnedError).to(beNil())
                 }
                 
